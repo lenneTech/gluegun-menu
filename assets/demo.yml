@@ -1,0 +1,236 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/kai/Projekte/lenne.Tech/gluegun-menu
+
+  # Export additional ENV variables
+  env:
+    recording: true
+
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 75
+
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 15
+
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+
+  # Quality
+  # 1 - 100
+  quality: 100
+
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Gluegun Menu
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: 'Monaco, Lucida Console, Ubuntu Mono, Monospace'
+
+  # The size of the font
+  fontSize: 12
+
+  # The height of lines
+  lineHeight: 1
+
+  # The spacing between letters
+  letterSpacing: 0
+
+  # Theme
+  theme:
+    background: 'transparent'
+    foreground: '#afafaf'
+    cursor: '#c7c7c7'
+    black: '#232628'
+    red: '#fc4384'
+    green: '#b3e33b'
+    yellow: '#ffa727'
+    blue: '#75dff2'
+    magenta: '#ae89fe'
+    cyan: '#708387'
+    white: '#d5d5d0'
+    brightBlack: '#626566'
+    brightRed: '#ff7fac'
+    brightGreen: '#c8ed71'
+    brightYellow: '#ebdf86'
+    brightBlue: '#75dff2'
+    brightMagenta: '#ae89fe'
+    brightCyan: '#b1c6ca'
+    brightWhite: '#f9f9f4'
+
+# Records, feel free to edit them
+records:
+  - delay: 0
+    content: '$ '
+  - delay: 200
+    content: c
+  - delay: 200
+    content: l
+  - delay: 200
+    content: i
+  - delay: 200
+    content: ' '
+  - delay: 200
+    content: s
+  - delay: 180
+    content: e
+  - delay: 102
+    content: r
+  - delay: 200
+    content: v
+  - delay: 200
+    content: e
+  - delay: 67
+    content: r
+  - delay: 157
+    content: ' '
+  - delay: 200
+    content: c
+  - delay: 200
+    content: r
+  - delay: 135
+    content: e
+  - delay: 200
+    content: a
+  - delay: 135
+    content: t
+  - delay: 181
+    content: e
+  - delay: 200
+    content: ' '
+  - delay: 200
+    content: x
+  - delay: 200
+    content: x
+  - delay: 200
+    content: x
+  - delay: 1000
+    content: "\b\e[K"
+  - delay: 200
+    content: "\b\e[K"
+  - delay: 84
+    content: "\b\e[K"
+  - delay: 82
+    content: "\b\e[K"
+  - delay: 85
+    content: "\b\e[K"
+  - delay: 85
+    content: "\b\e[K"
+  - delay: 83
+    content: "\b\e[K"
+  - delay: 84
+    content: "\b\e[K"
+  - delay: 85
+    content: "\b\e[K"
+  - delay: 83
+    content: "\b\e[K"
+  - delay: 83
+    content: "\b\e[K"
+  - delay: 84
+    content: "\b\e[K"
+  - delay: 83
+    content: "\b\e[K"
+  - delay: 84
+    content: "\b\e[K"
+  - delay: 84
+    content: "\b\e[K"
+  - delay: 82
+    content: "\b\e[K"
+  - delay: 200
+    content: "\b\e[K"
+  - delay: 200
+    content: "\b\e[K"
+  - delay: 200
+    content: "\r\n"
+  - delay: 200
+    content: "\e[0m\e[36mWelcome to lenne.Tech CLI 0.0.45\e[39m\e[0m\r\n"
+  - delay: 23
+    content: "\e[?25l"
+  - delay: 5
+    content: "\e[36m?\e[39m \e[1mSelect command\e[22m \e[2m…\e[22m \r\n\e[36m❯\e[39m \e[36m\e[4m[ help ]\e[24m\e[39m\r\n  cli (Commands to create a CLI)\r\n  docs (Docs commands)\r\n  git (Git commands)\r\n  npm (Npm commands)\r\n  server (Server commands)\r\n  starter (Starter commands)\r\n  tools (Tools commands)\r\n  typescript (Typescript commands)\r\n  update (Update @lenne.tech/cli)\r\n  version (Output the version number)\r\n  [ cancel ]\e[12A\e[20G"
+  - delay: 2458
+    content: "\e[12B\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[1G\e[36m?\e[39m \e[1mSelect command\e[22m \e[2m…\e[22m \r\n  [ help ]\r\n\e[36m❯\e[39m \e[36m\e[4mcli (Commands to create a CLI)\e[24m\e[39m\r\n  docs (Docs commands)\r\n  git (Git commands)\r\n  npm (Npm commands)\r\n  server (Server commands)\r\n  starter (Starter commands)\r\n  tools (Tools commands)\r\n  typescript (Typescript commands)\r\n  update (Update @lenne.tech/cli)\r\n  version (Output the version number)\r\n  [ cancel ]\e[12A\e[20G"
+  - delay: 333
+    content: "\e[12B\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[1G\e[36m?\e[39m \e[1mSelect command\e[22m \e[2m…\e[22m \r\n  [ help ]\r\n  cli (Commands to create a CLI)\r\n\e[36m❯\e[39m \e[36m\e[4mdocs (Docs commands)\e[24m\e[39m\r\n  git (Git commands)\r\n  npm (Npm commands)\r\n  server (Server commands)\r\n  starter (Starter commands)\r\n  tools (Tools commands)\r\n  typescript (Typescript commands)\r\n  update (Update @lenne.tech/cli)\r\n  version (Output the version number)\r\n  [ cancel ]\e[12A\e[20G"
+  - delay: 302
+    content: "\e[12B\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[1G\e[36m?\e[39m \e[1mSelect command\e[22m \e[2m…\e[22m \r\n  [ help ]\r\n  cli (Commands to create a CLI)\r\n  docs (Docs commands)\r\n\e[36m❯\e[39m \e[36m\e[4mgit (Git commands)\e[24m\e[39m\r\n  npm (Npm commands)\r\n  server (Server commands)\r\n  starter (Starter commands)\r\n  tools (Tools commands)\r\n  typescript (Typescript commands)\r\n  update (Update @lenne.tech/cli)\r\n  version (Output the version number)\r\n  [ cancel ]\e[12A\e[20G"
+  - delay: 286
+    content: "\e[12B\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[1G\e[36m?\e[39m \e[1mSelect command\e[22m \e[2m…\e[22m \r\n  [ help ]\r\n  cli (Commands to create a CLI)\r\n  docs (Docs commands)\r\n  git (Git commands)\r\n\e[36m❯\e[39m \e[36m\e[4mnpm (Npm commands)\e[24m\e[39m\r\n  server (Server commands)\r\n  starter (Starter commands)\r\n  tools (Tools commands)\r\n  typescript (Typescript commands)\r\n  update (Update @lenne.tech/cli)\r\n  version (Output the version number)\r\n  [ cancel ]\e[12A\e[20G"
+  - delay: 278
+    content: "\e[12B\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[1G\e[36m?\e[39m \e[1mSelect command\e[22m \e[2m…\e[22m \r\n  [ help ]\r\n  cli (Commands to create a CLI)\r\n  docs (Docs commands)\r\n  git (Git commands)\r\n  npm (Npm commands)\r\n\e[36m❯\e[39m \e[36m\e[4mserver (Server commands)\e[24m\e[39m\r\n  starter (Starter commands)\r\n  tools (Tools commands)\r\n  typescript (Typescript commands)\r\n  update (Update @lenne.tech/cli)\r\n  version (Output the version number)\r\n  [ cancel ]\e[12A\e[20G"
+  - delay: 846
+    content: "\e[12B\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[1G\e[32m✔\e[39m \e[1mSelect command\e[22m \e[2m·\e[22m \e[36mserver (Server commands)\e[39m\e[23D\r\n\e[0m\e[36mServer commands\e[39m\e[0m\r\n\e[?25l\e[36m?\e[39m \e[1mSelect command\e[22m \e[2m…\e[22m \r\n\e[36m❯\e[39m \e[36m\e[4m[ help ]\e[24m\e[39m\r\n  create (Creates a new server)\r\n  module (Creates a new server module)\r\n  [ back ]\r\n  [ cancel ]\e[5A\e[20G"
+  - delay: 1028
+    content: "\e[5B\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[1G\e[36m?\e[39m \e[1mSelect command\e[22m \e[2m…\e[22m \r\n  [ help ]\r\n\e[36m❯\e[39m \e[36m\e[4mcreate (Creates a new server)\e[24m\e[39m\r\n  module (Creates a new server module)\r\n  [ back ]\r\n  [ cancel ]\e[5A\e[20G"
+  - delay: 844
+    content: "\e[5B\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[F\e[2K\e[1G\e[32m✔\e[39m \e[1mSelect command\e[22m \e[2m·\e[22m \e[36mcreate (Creates a new server)\e[39m\e[28D\r\n\e[0mCreate a new server\e[0m\r\n"
+  - delay: 7
+    content: "\e[?25l\e[36m?\e[39m \e[1mEnter server name\e[22m \e[2m›\e[22m \e[46m\e[30m\e[30m \e[39m\e[30m\e[39m\e[49m\e[1D"
+  - delay: 1000
+    content: "\e[?25l\e[2K\e[1G\e[36m?\e[39m \e[1mEnter server name\e[22m \e[2m›\e[22m x\e[46m\e[30m\e[30m \e[39m\e[30m\e[39m\e[49m"
+  - delay: 201
+    content: "\e[?25l\e[2K\e[1G\e[36m?\e[39m \e[1mEnter server name\e[22m \e[2m›\e[22m xx\e[46m\e[30m\e[30m \e[39m\e[30m\e[39m\e[49m"
+  - delay: 156
+    content: "\e[?25l\e[2K\e[1G\e[36m?\e[39m \e[1mEnter server name\e[22m \e[2m›\e[22m xxx\e[46m\e[30m\e[30m \e[39m\e[30m\e[39m\e[49m"
+  - delay: 200
+    content: "\a"
+  - delay: 200
+    content: "\a"
+  - delay: 200
+    content: "\a"
+  - delay: 200
+    content: "\a"
+  - delay: 200
+    content: "\e[2K\e[1G\e[35m✖\e[39m \e[1mEnter server name\e[22m \e[2m·\e[22m \e[32mxxx\e[39m\r\nGoodbye ✌️\r\n\e[?25h\e[?25h\e[?25h\e[?25h\e[?25h\e[?25h"
+  - delay: 2000
+    content: ' '

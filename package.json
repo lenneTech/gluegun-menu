@@ -1,0 +1,78 @@
+{
+  "name": "@lenne.tech/gluegun-menu",
+  "version": "0.0.1",
+  "description": "Menu for gluegun CLIs",
+  "keywords": [
+    "gluegun",
+    "menu",
+    "cli",
+    "extension",
+    "lenne.tech"
+  ],
+  "contributors": [
+    "Pascal Klesse",
+    "Kai Haase <kai.haase@lenne.tech> (http://lenne.tech)"
+  ],
+  "homepage": "http://lenne.tech",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lenneTech/gluegun-menu"
+  },
+  "bugs": {
+    "url": "https://github.com/lenneTech/gluegun-menu/issues"
+  },
+  "scripts": {
+    "build": "npm run lint && npm run clean-build && npm run compile",
+    "clean-build": "rimraf ./dist",
+    "compile": "tsc -p .",
+    "coverage": "jest --coverage",
+    "format": "prettier --write 'src/**/*.{js,ts,tsx,json}'",
+    "lint": "eslint --ext .js,.ts src",
+    "prepack": "npm run build",
+    "preversion": "npm run lint",
+    "test": "jest",
+    "watch": "jest --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@lenne.tech/npm-package-helper": "0.0.10",
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.10",
+    "@typescript-eslint/eslint-plugin": "2.3.2",
+    "@typescript-eslint/parser": "2.3.2",
+    "eslint": "6.5.1",
+    "eslint-config-prettier": "6.3.0",
+    "gluegun": "4.0.1",
+    "husky": "^3.0.8",
+    "jest": "24.9.0",
+    "prettier": "1.18.2",
+    "pretty-quick": "1.11.1",
+    "rimraf": "3.0.0",
+    "ts-jest": "24.1.0",
+    "ts-node": "8.4.1",
+    "typescript": "3.6.3"
+  },
+  "peerDependencies": {
+    "gluegun": ">=3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "ts-node --skip-project extras/sync-version.ts && pretty-quick --staged",
+      "pre-push": "npm run lint"
+    }
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "src/**/*",
+    "LICENSE",
+    "assets/demo.gif",
+    "README.md"
+  ]
+}
