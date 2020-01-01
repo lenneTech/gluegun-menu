@@ -101,6 +101,7 @@ export class Menu {
 
         // Run command
         try {
+          this.toolbox.parameters.options.fromGluegunMenu = true;
           await command.run(this.toolbox);
           process.exit();
         } catch (e) {
@@ -121,5 +122,11 @@ export class Menu {
  * Extend toolbox
  */
 export default (toolbox: GluegunToolbox) => {
+  // Add menu
   toolbox.menu = new Menu(toolbox);
+
+  // Add the function to query whether the command was started from the menu
+  toolbox.fromMenu = () => {
+    return toolbox.parameters.options.fromGluegunMenu;
+  };
 };

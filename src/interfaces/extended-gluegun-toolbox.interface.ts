@@ -6,4 +6,5 @@ import { Menu } from '../extensions/menu.extension';
  */
 export interface GluegunMenuToolbox extends GluegunToolbox {
   menu?: Menu;
+  fromMenu?: () => boolean;
 }

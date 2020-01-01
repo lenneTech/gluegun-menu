@@ -148,10 +148,50 @@ module.exports = {
 };
 ```
 
+## Extensions of the toolbox
+
+### toolbox.menu
+
+The menu extends the toolbox by the functionality to execute commands via a menu in the terminal (see above).
+
+### toolbox.fromMenu
+
+Extends the toolbox to the possibility to determine during the execution of a command whether the command was
+called via the menu.
+
+```typescript
+const NewCommand: GluegunCommand = {
+  // ...
+  run: async (toolbox: GluegunMenuToolbox) => {
+    //...
+
+    if (toolbox.fromMenu()) {
+      console.log('I was called via the menu');
+    } else {
+      console.log('I was called via a direct command in the terminal');
+    }
+
+    // ...
+  }
+};
+export default NewCommand;
+```
+
+## Additional parameter options
+
+### toolbox.parameters.options.fromGluegunMenu
+
+Flag that shows whether the command was called via the menu.
+
 ## Thanks
 
 Many thanks to the developers of [Glugun](https://infinitered.github.io/gluegun)
 and all the developers whose packages are used here.
+
+Many thanks also to:
+
+- [pascal-klesse](https://github.com/pascal-klesse) for the support during the development
+- [Tazaf](https://github.com/Tazaf) for the idea to set the `fromGlueguneMenu` flag
 
 ## License
 

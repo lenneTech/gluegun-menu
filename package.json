@@ -1,6 +1,6 @@
 {
   "name": "@lenne.tech/gluegun-menu",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Menu for gluegun CLIs",
   "keywords": [
     "gluegun",
