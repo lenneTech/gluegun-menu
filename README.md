@@ -64,8 +64,12 @@ module.exports = {
 
 2. options?: object
 
-   - level: number => Level of the current section (0 = main section)
-   - headline: string => Headline for the current section
+   - level?: number => Level of the current section (0 = main section)
+   - headline?: string => Headline for the current section
+   - showHelp?: string => If you want to show the `help` command at the top
+   - backMessage?: string => custom message to indicate `go back` action
+   - cancelMessage?: string => custom message to indicate `cancel` action
+   - byeMessage?: string => custom `bye` message
 
 Note: If the options in the main menu are to be used, for example to define the headline,
 `null` or an empty string `''` must be passed as the first parameter:  
