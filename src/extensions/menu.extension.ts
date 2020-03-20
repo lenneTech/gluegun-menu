@@ -17,8 +17,20 @@ export class Menu {
     options?: {
       level?: number;
       headline?: string;
+      showHelp?: boolean;
+      helpMessage?: string;
+      backMessage?: string;
+      cancelMessage?: string;
+      byeMessage?: string;
     }
   ) {
+    const messages = {
+      help: options.helpMessage || '[ help ]',
+      back: options.backMessage || '[ back ]',
+      cancel: options.cancelMessage || '[ cancel ]',
+      bye: options.byeMessage || 'Take care 👋',
+    }
+
     // Toolbox feature
     const {
       print,
@@ -46,7 +58,7 @@ export class Menu {
     // Get main commands
     let mainCommands = commands
       .filter(
-        (c) =>
+        (c: any) =>
           // Get only children of current command
           c.commandPath.join(' ').startsWith(parentCommands) &&
           // Get only direct children of current command
@@ -60,11 +72,15 @@ export class Menu {
       .sort();
 
     // Additional commands
-    mainCommands = ['[ help ]'].concat(mainCommands);
-    if (level) {
-      mainCommands.push('[ back ]');
+    if (options.showHelp) {
+      mainCommands = [messages.help].concat(mainCommands)
     }
-    mainCommands.push('[ cancel ]');
+
+    if (level) {
+      mainCommands.push(messages.back);
+    }
+
+    mainCommands.push(messages.cancel);
 
     // Select command
     const { commandName } = await prompt.ask({
@@ -81,22 +97,25 @@ export class Menu {
     }
 
     switch (commandName) {
-      case '[ back ]': {
-        await this.showMenu(parentCommands.substr(0, parentCommands.lastIndexOf(' ')));
+      case messages.back: {
+        await this.showMenu(
+          parentCommands.substr(0, parentCommands.lastIndexOf(' ')),
+          options
+        );
         return;
       }
-      case '[ cancel ]': {
-        print.info('Take care 👋');
+      case messages.cancel: {
+        print.info(messages.bye);
         return;
       }
-      case '[ help ]': {
+      case messages.help: {
         (print.printCommands as any)(this.toolbox, level ? parentCommands.split(' ') : undefined);
         break;
       }
       default: {
         // Get command
         const command = commands.filter(
-          (c) => c.commandPath.join(' ') === `${parentCommands} ${commandName}`.trim().replace(/\s\(.*\)$/, '')
+          (c: any) => c.commandPath.join(' ') === `${parentCommands} ${commandName}`.trim().replace(/\s\(.*\)$/, '')
         )[0];
 
         // Run command
