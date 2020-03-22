@@ -4,10 +4,13 @@ import { GluegunToolbox } from 'gluegun';
  * Menu for gluegun
  */
 export class Menu {
+  private optionsCache: any;
   /**
    * Constructor for integration of toolbox
    */
-  constructor(protected toolbox: GluegunToolbox) {}
+  constructor(protected toolbox: GluegunToolbox) {
+    this.optionsCache = {}
+  }
 
   /**
    * Show menu
@@ -24,7 +27,18 @@ export class Menu {
       byeLabel?: string;
     }
   ) {
-    options = options || {};
+    const cacheIsEmpty = !Object.keys(this.optionsCache).length;
+    if (cacheIsEmpty) {
+      // save everything except level & headline
+      this.optionsCache = options;
+      delete this.optionsCache.level;
+      delete this.optionsCache.headline;
+    }
+
+    options = {
+      ...this.optionsCache,
+      ...options
+    };
     const messages = {
       help: options.helpLabel || '[ help ]',
       back: options.backLabel || '[ back ]',
