@@ -18,17 +18,18 @@ export class Menu {
       level?: number;
       headline?: string;
       showHelp?: boolean;
-      helpMessage?: string;
-      backMessage?: string;
-      cancelMessage?: string;
-      byeMessage?: string;
+      helpLabel?: string;
+      backLabel?: string;
+      cancelLabel?: string;
+      byeLabel?: string;
     }
   ) {
+    options = options || {};
     const messages = {
-      help: options.helpMessage || '[ help ]',
-      back: options.backMessage || '[ back ]',
-      cancel: options.cancelMessage || '[ cancel ]',
-      bye: options.byeMessage || 'Take care 👋',
+      help: options.helpLabel || '[ help ]',
+      back: options.backLabel || '[ back ]',
+      cancel: options.cancelLabel || '[ cancel ]',
+      bye: options.byeLabel || 'Take care 👋',
     }
 
     // Toolbox feature
@@ -72,7 +73,7 @@ export class Menu {
       .sort();
 
     // Additional commands
-    if (options.showHelp) {
+    if (options.showHelp !== false) {
       mainCommands = [messages.help].concat(mainCommands)
     }
 
@@ -98,14 +99,35 @@ export class Menu {
 
     switch (commandName) {
       case messages.back: {
-        await this.showMenu(
-          parentCommands.substr(0, parentCommands.lastIndexOf(' ')),
-          options
-        );
-        return;
+          // Get command
+         let command = commands.filter(
+           (c: any) =>
+             c.commandPath.join(' ') === parentCommands
+               .trim().replace(/\s\(.*\)$/, '')
+               .split(' ').slice(0,-1).join(' ')
+         )[0];
+         if (!command) {
+           command = commands[0];
+         }
+
+         // Run command
+         try {
+           this.toolbox.parameters.options.fromGluegunMenu = true;
+           await command.run(this.toolbox);
+           process.exit();
+         } catch (e) {
+           // Abort via CTRL-C
+           if (!e) {
+             console.log(messages.bye);
+           } else {
+             // Throw error
+             throw e;
+           }
+         }
+         break;
       }
       case messages.cancel: {
-        print.info(messages.bye);
+        print.info(messages.cancel);
         return;
       }
       case messages.help: {
@@ -126,7 +148,7 @@ export class Menu {
         } catch (e) {
           // Abort via CTRL-C
           if (!e) {
-            console.log('Goodbye ✌️');
+            console.log(messages.bye);
           } else {
             // Throw error
             throw e;
