@@ -21,18 +21,25 @@ export class Menu {
       level?: number;
       headline?: string;
       showHelp?: boolean;
+      setCache?: boolean;
       helpLabel?: string;
       backLabel?: string;
       cancelLabel?: string;
-      byeLabel?: string;
+      byeMessage?: string;
     }
   ) {
-    const cacheIsEmpty = !Object.keys(this.optionsCache).length;
-    if (cacheIsEmpty) {
-      // save everything except level & headline
-      this.optionsCache = options;
+    if (
+      options && options.setCache
+      && (
+        !!options.showHelp || !!options.helpLabel
+        || !!options.backLabel || !!options.cancelLabel
+        || !!options.byeMessage
+      )) {
+      // save everything except level, headline & setCache
+      this.optionsCache = { ...options };
       delete this.optionsCache.level;
       delete this.optionsCache.headline;
+      delete this.optionsCache.setCache;
     }
 
     options = {
@@ -43,7 +50,7 @@ export class Menu {
       help: options.helpLabel || '[ help ]',
       back: options.backLabel || '[ back ]',
       cancel: options.cancelLabel || '[ cancel ]',
-      bye: options.byeLabel || 'Take care 👋',
+      bye: options.byeMessage || 'Take care 👋',
     }
 
     // Toolbox feature

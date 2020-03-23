@@ -66,10 +66,11 @@ module.exports = {
 
    - level?: number => Level of the current section (0 = main section)
    - headline?: string => Headline for the current section
-   - showHelp?: string => If you want to show the `help` command at the top
+   - showHelp?: boolean => If you want to show the `help` command at the top
+   - setCache?: boolean => Re-use these `options` in subsequent menus (doesn't apply for `level`, `headline` or `setCache`)
    - backLabel?: string => custom label to indicate `go back` action
    - cancelLabel?: string => custom label to indicate `cancel` action
-   - byeLabel?: string => custom `bye` label
+   - byeMessage?: string => custom `bye` message
 
 Note: If the options in the main menu are to be used, for example to define the headline,
 `null` or an empty string `''` must be passed as the first parameter:  
