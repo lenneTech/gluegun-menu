@@ -148,7 +148,7 @@ export class Menu {
          break;
       }
       case messages.cancel: {
-        print.info(messages.cancel);
+        print.info(messages.bye);
         return;
       }
       case messages.help: {
