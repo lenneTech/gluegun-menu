@@ -4,10 +4,13 @@ import { GluegunToolbox } from 'gluegun';
  * Menu for gluegun
  */
 export class Menu {
+  private optionsCache: any;
   /**
    * Constructor for integration of toolbox
    */
-  constructor(protected toolbox: GluegunToolbox) {}
+  constructor(protected toolbox: GluegunToolbox) {
+    this.optionsCache = {}
+  }
 
   /**
    * Show menu
@@ -17,8 +20,39 @@ export class Menu {
     options?: {
       level?: number;
       headline?: string;
+      showHelp?: boolean;
+      setCache?: boolean;
+      helpLabel?: string;
+      backLabel?: string;
+      cancelLabel?: string;
+      byeMessage?: string;
     }
   ) {
+    if (
+      options && options.setCache
+      && (
+        !!options.showHelp || !!options.helpLabel
+        || !!options.backLabel || !!options.cancelLabel
+        || !!options.byeMessage
+      )) {
+      // save everything except level, headline & setCache
+      this.optionsCache = { ...options };
+      delete this.optionsCache.level;
+      delete this.optionsCache.headline;
+      delete this.optionsCache.setCache;
+    }
+
+    options = {
+      ...this.optionsCache,
+      ...options
+    };
+    const messages = {
+      help: options.helpLabel || '[ help ]',
+      back: options.backLabel || '[ back ]',
+      cancel: options.cancelLabel || '[ cancel ]',
+      bye: options.byeMessage || 'Take care 👋',
+    }
+
     // Toolbox feature
     const {
       print,
@@ -46,7 +80,7 @@ export class Menu {
     // Get main commands
     let mainCommands = commands
       .filter(
-        (c) =>
+        (c: any) =>
           // Get only children of current command
           c.commandPath.join(' ').startsWith(parentCommands) &&
           // Get only direct children of current command
@@ -60,11 +94,15 @@ export class Menu {
       .sort();
 
     // Additional commands
-    mainCommands = ['[ help ]'].concat(mainCommands);
-    if (level) {
-      mainCommands.push('[ back ]');
+    if (options.showHelp !== false) {
+      mainCommands = [messages.help].concat(mainCommands)
     }
-    mainCommands.push('[ cancel ]');
+
+    if (level) {
+      mainCommands.push(messages.back);
+    }
+
+    mainCommands.push(messages.cancel);
 
     // Select command
     const { commandName } = await prompt.ask({
@@ -81,22 +119,46 @@ export class Menu {
     }
 
     switch (commandName) {
-      case '[ back ]': {
-        await this.showMenu(parentCommands.substr(0, parentCommands.lastIndexOf(' ')));
+      case messages.back: {
+          // Get command
+         let command = commands.filter(
+           (c: any) =>
+             c.commandPath.join(' ') === parentCommands
+               .trim().replace(/\s\(.*\)$/, '')
+               .split(' ').slice(0,-1).join(' ')
+         )[0];
+         if (!command) {
+           command = commands[0];
+         }
+
+         // Run command
+         try {
+           this.toolbox.parameters.options.fromGluegunMenu = true;
+           await command.run(this.toolbox);
+           process.exit();
+         } catch (e) {
+           // Abort via CTRL-C
+           if (!e) {
+             console.log(messages.bye);
+           } else {
+             // Throw error
+             throw e;
+           }
+         }
+         break;
+      }
+      case messages.cancel: {
+        print.info(messages.bye);
         return;
       }
-      case '[ cancel ]': {
-        print.info('Take care 👋');
-        return;
-      }
-      case '[ help ]': {
+      case messages.help: {
         (print.printCommands as any)(this.toolbox, level ? parentCommands.split(' ') : undefined);
         break;
       }
       default: {
         // Get command
         const command = commands.filter(
-          (c) => c.commandPath.join(' ') === `${parentCommands} ${commandName}`.trim().replace(/\s\(.*\)$/, '')
+          (c: any) => c.commandPath.join(' ') === `${parentCommands} ${commandName}`.trim().replace(/\s\(.*\)$/, '')
         )[0];
 
         // Run command
@@ -107,7 +169,7 @@ export class Menu {
         } catch (e) {
           // Abort via CTRL-C
           if (!e) {
-            console.log('Goodbye ✌️');
+            console.log(messages.bye);
           } else {
             // Throw error
             throw e;
