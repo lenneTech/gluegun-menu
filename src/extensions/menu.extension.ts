@@ -21,6 +21,7 @@ export class Menu {
       level?: number;
       headline?: string;
       showHelp?: boolean;
+      hideBack?: boolean;
       setCache?: boolean;
       helpLabel?: string;
       backLabel?: string;
@@ -33,7 +34,7 @@ export class Menu {
       && (
         !!options.showHelp || !!options.helpLabel
         || !!options.backLabel || !!options.cancelLabel
-        || !!options.byeMessage
+        || !!options.byeMessage || !!options.hideBack
       )) {
       // save everything except level, headline & setCache
       this.optionsCache = { ...options };
@@ -98,7 +99,7 @@ export class Menu {
       mainCommands = [messages.help].concat(mainCommands)
     }
 
-    if (level) {
+    if (level && options.hideBack !== true) {
       mainCommands.push(messages.back);
     }
 
