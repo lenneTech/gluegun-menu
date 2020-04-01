@@ -67,6 +67,7 @@ module.exports = {
    - level?: number => Level of the current section (0 = main section)
    - headline?: string => Headline for the current section
    - showHelp?: boolean => If you want to show the `help` command at the top
+   - hideBack?: boolean => If you want to hide the `back` command at the bottom
    - setCache?: boolean => Re-use these `options` in subsequent menus (doesn't apply for `level`, `headline` or `setCache`)
    - backLabel?: string => custom label to indicate `go back` action
    - cancelLabel?: string => custom label to indicate `cancel` action
