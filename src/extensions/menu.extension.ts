@@ -9,7 +9,7 @@ export class Menu {
    * Constructor for integration of toolbox
    */
   constructor(protected toolbox: GluegunToolbox) {
-    this.optionsCache = {}
+    this.optionsCache = {};
   }
 
   /**
@@ -28,14 +28,17 @@ export class Menu {
       cancelLabel?: string;
       byeMessage?: string;
     }
-  ) {
+  ): Promise<any> {
     if (
-      options && options.setCache
-      && (
-        !!options.showHelp || !!options.helpLabel
-        || !!options.backLabel || !!options.cancelLabel
-        || !!options.byeMessage || !!options.hideBack
-      )) {
+      options &&
+      options.setCache &&
+      (!!options.showHelp ||
+        !!options.helpLabel ||
+        !!options.backLabel ||
+        !!options.cancelLabel ||
+        !!options.byeMessage ||
+        !!options.hideBack)
+    ) {
       // save everything except level, headline & setCache
       this.optionsCache = { ...options };
       delete this.optionsCache.level;
@@ -45,20 +48,20 @@ export class Menu {
 
     options = {
       ...this.optionsCache,
-      ...options
+      ...options,
     };
     const messages = {
       help: options.helpLabel || '[ help ]',
       back: options.backLabel || '[ back ]',
       cancel: options.cancelLabel || '[ cancel ]',
       bye: options.byeMessage || 'Take care 👋',
-    }
+    };
 
     // Toolbox feature
     const {
       print,
       prompt,
-      runtime: { brand, commands }
+      runtime: { brand, commands },
     } = this.toolbox;
 
     // Prepare parent command
@@ -68,7 +71,7 @@ export class Menu {
     const { level, headline } = Object.assign(
       {
         level: parentCommands ? parentCommands.split(' ').length : 0,
-        headline: parentCommands ? parentCommands.charAt(0).toUpperCase() + parentCommands.slice(1) + ' commands' : ''
+        headline: parentCommands ? parentCommands.charAt(0).toUpperCase() + parentCommands.slice(1) + ' commands' : '',
       },
       options
     );
@@ -96,7 +99,7 @@ export class Menu {
 
     // Additional commands
     if (options.showHelp !== false) {
-      mainCommands = [messages.help].concat(mainCommands)
+      mainCommands = [messages.help].concat(mainCommands);
     }
 
     if (level && options.hideBack !== true) {
@@ -110,7 +113,7 @@ export class Menu {
       type: 'select',
       name: 'commandName',
       message: 'Select command',
-      choices: mainCommands.slice(0)
+      choices: mainCommands.slice(0),
     });
 
     // Check command
@@ -121,32 +124,36 @@ export class Menu {
 
     switch (commandName) {
       case messages.back: {
-          // Get command
-         let command = commands.filter(
-           (c: any) =>
-             c.commandPath.join(' ') === parentCommands
-               .trim().replace(/\s\(.*\)$/, '')
-               .split(' ').slice(0,-1).join(' ')
-         )[0];
-         if (!command) {
-           command = commands[0];
-         }
+        // Get command
+        let command = commands.filter(
+          (c: any) =>
+            c.commandPath.join(' ') ===
+            parentCommands
+              .trim()
+              .replace(/\s\(.*\)$/, '')
+              .split(' ')
+              .slice(0, -1)
+              .join(' ')
+        )[0];
+        if (!command) {
+          command = commands[0];
+        }
 
-         // Run command
-         try {
-           this.toolbox.parameters.options.fromGluegunMenu = true;
-           await command.run(this.toolbox);
-           process.exit();
-         } catch (e) {
-           // Abort via CTRL-C
-           if (!e) {
-             console.log(messages.bye);
-           } else {
-             // Throw error
-             throw e;
-           }
-         }
-         break;
+        // Run command
+        try {
+          this.toolbox.parameters.options.fromGluegunMenu = true;
+          await command.run(this.toolbox);
+          process.exit();
+        } catch (e) {
+          // Abort via CTRL-C
+          if (!e) {
+            console.log(messages.bye);
+          } else {
+            // Throw error
+            throw e;
+          }
+        }
+        break;
       }
       case messages.cancel: {
         print.info(messages.bye);
