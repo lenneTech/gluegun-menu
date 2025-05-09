@@ -18,26 +18,26 @@ export class Menu {
   public async showMenu(
     parentCommands?: string,
     options?: {
-      level?: number;
-      headline?: string;
-      showHelp?: boolean;
-      hideBack?: boolean;
-      setCache?: boolean;
-      helpLabel?: string;
       backLabel?: string;
-      cancelLabel?: string;
       byeMessage?: string;
-    }
+      cancelLabel?: string;
+      headline?: string;
+      helpLabel?: string;
+      hideBack?: boolean;
+      level?: number;
+      setCache?: boolean;
+      showHelp?: boolean;
+    },
   ): Promise<any> {
     if (
-      options &&
-      options.setCache &&
-      (!!options.showHelp ||
-        !!options.helpLabel ||
-        !!options.backLabel ||
-        !!options.cancelLabel ||
-        !!options.byeMessage ||
-        !!options.hideBack)
+      options
+      && options.setCache
+      && (!!options.showHelp
+        || !!options.helpLabel
+        || !!options.backLabel
+        || !!options.cancelLabel
+        || !!options.byeMessage
+        || !!options.hideBack)
     ) {
       // save everything except level, headline & setCache
       this.optionsCache = { ...options };
@@ -51,10 +51,10 @@ export class Menu {
       ...options,
     };
     const messages = {
-      help: options.helpLabel || '[ help ]',
       back: options.backLabel || '[ back ]',
-      cancel: options.cancelLabel || '[ cancel ]',
       bye: options.byeMessage || 'Take care 👋',
+      cancel: options.cancelLabel || '[ cancel ]',
+      help: options.helpLabel || '[ help ]',
     };
 
     // Toolbox feature
@@ -68,12 +68,12 @@ export class Menu {
     parentCommands = parentCommands ? parentCommands.trim() : '';
 
     // Process options
-    const { level, headline } = Object.assign(
+    const { headline, level } = Object.assign(
       {
+        headline: parentCommands ? `${parentCommands.charAt(0).toUpperCase() + parentCommands.slice(1)} commands` : '',
         level: parentCommands ? parentCommands.split(' ').length : 0,
-        headline: parentCommands ? parentCommands.charAt(0).toUpperCase() + parentCommands.slice(1) + ' commands' : '',
       },
-      options
+      options,
     );
 
     // Headline
@@ -86,15 +86,15 @@ export class Menu {
       .filter(
         (c: any) =>
           // Get only children of current command
-          c.commandPath.join(' ').startsWith(parentCommands) &&
+          c.commandPath.join(' ').startsWith(parentCommands)
           // Get only direct children of current command
-          c.commandPath.length === level + 1 &&
+          && c.commandPath.length === level + 1
           // Help will be added as additional command
-          !['help'].includes(c.commandPath[0]) &&
+          && !['help'].includes(c.commandPath[0])
           // Don't show CLI brand command
-          !(level === 0 && [brand].includes(c.commandPath[0]))
+          && !(level === 0 && [brand].includes(c.commandPath[0])),
       )
-      .map((c) => c.commandPath[level] + (c.description ? ` (${c.description})` : ''))
+      .map(c => c.commandPath[level] + (c.description ? ` (${c.description})` : ''))
       .sort();
 
     // Additional commands
@@ -110,10 +110,10 @@ export class Menu {
 
     // Select command
     const { commandName } = await prompt.ask({
-      type: 'select',
-      name: 'commandName',
-      message: 'Select command',
       choices: mainCommands.slice(0),
+      message: 'Select command',
+      name: 'commandName',
+      type: 'select',
     });
 
     // Check command
@@ -127,13 +127,13 @@ export class Menu {
         // Get command
         let command = commands.filter(
           (c: any) =>
-            c.commandPath.join(' ') ===
-            parentCommands
+            c.commandPath.join(' ')
+            === parentCommands
               .trim()
               .replace(/\s\(.*\)$/, '')
               .split(' ')
               .slice(0, -1)
-              .join(' ')
+              .join(' '),
         )[0];
         if (!command) {
           command = commands[0];
@@ -166,7 +166,7 @@ export class Menu {
       default: {
         // Get command
         const command = commands.filter(
-          (c: any) => c.commandPath.join(' ') === `${parentCommands} ${commandName}`.trim().replace(/\s\(.*\)$/, '')
+          (c: any) => c.commandPath.join(' ') === `${parentCommands} ${commandName}`.trim().replace(/\s\(.*\)$/, ''),
         )[0];
 
         // Run command
