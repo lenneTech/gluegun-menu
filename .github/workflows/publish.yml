@@ -8,18 +8,41 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Trusted Publishing (OIDC): npm exchanges this run's GitHub OIDC token for a publish token that
+    # expires within minutes, instead of a long-lived NPM_TOKEN, and signs a provenance statement,
+    # because the repository is public. It needs the Trusted Publisher on npmjs.com:
+    # lenneTech / gluegun-menu / publish.yml, no environment. Renaming this file breaks publishing
+    # until that entry is changed too. Job-level `permissions` replaces the default token
+    # permissions: `id-token: write` lets the job request the OIDC token, nothing here writes to the
+    # repository.
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Git checkout
         uses: actions/checkout@v4
-      - name: Node 20
+      # Node 24: npm 12 needs ^24.15.0, and Node 22.22.2's bundled npm cannot `npm install -g`
+      # (actions/runner-images#13883). `registry-url` pins the registry npm publishes to.
+      - name: Node 24
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
+          registry-url: https://registry.npmjs.org
       - name: NPM install
         run: npm install
       - name: Build
         run: npm run build
+      # Trusted Publishing needs npm >= 11.5.1. npm 12 is the major the lenneTech base packages
+      # publish with through OIDC. Pinned to that major, not `@latest`, so a new npm major never
+      # reaches a release run without having been tried first.
+      - name: npm for Trusted Publishing
+        run: npm install -g npm@12
+      # The npm CLI itself, because JS-DevTools/npm-publish takes a token and cannot do OIDC. No
+      # NPM_TOKEN fallback: npm would use it silently whenever the OIDC exchange fails and publish
+      # without provenance. A failed exchange now fails the publish (rerun with `gh run rerun --failed`).
+      # Unlike the old action, an already published version fails here instead of being skipped.
+      #
+      # `--ignore-scripts`, as the old action did by default: without it npm runs `prepack`
+      # (= `npm run build`) again and publishes a second build instead of the one built above.
       - name: Publish
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --ignore-scripts
